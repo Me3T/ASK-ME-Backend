@@ -9,15 +9,19 @@ const generateAnswer = async (question) => {
       {
         model: "gpt-3.5-turbo",
         messages: [
-          { role: "system", content: "You are a helpful assistant" },
+          {
+            role: "system",
+            content:
+              "You are a helpful assistant. Always keep your answers concise, under 140 characters.",
+          },
           { role: "user", content: question },
         ],
-        max_tokens: 50,
+        max_tokens: 40,
       },
       {
         headers: {
           Authorization: `Bearer ${API_KEY}`,
-          "Content-Type": `application/json`,
+          "Content-Type": "application/json",
         },
       }
     );
@@ -28,11 +32,4 @@ const generateAnswer = async (question) => {
   }
 };
 
-const shortAns = (ans) => {
-  if (ans.length <= 140) {
-    return ans;
-  }
-  return ans.slice(0, 137) + "...";
-};
-
-module.exports = { generateAnswer, shortAns };
+module.exports = { generateAnswer };
